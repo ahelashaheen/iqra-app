@@ -1,7 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart' hide Radios;
-import 'RadioResponse.dart';
 import 'package:islami_app/my_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/app_config_provider.dart';
+import 'RadioResponse.dart';
 
 class RadioItem extends StatelessWidget {
   Radios radio;
@@ -11,18 +14,19 @@ class RadioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return SizedBox(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          Text(radio.name ?? '',
+          Text(
+            radio.name ?? '',
             style: TextStyle(
+                color: provider.isDarkMode()
+                    ? MyTheme.yellowcolor
+                    : Theme.of(context).primaryColor,
                 fontSize: 28,
-                fontWeight: FontWeight.bold
-            ),),
+                fontWeight: FontWeight.bold),),
           SizedBox(height: 16,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
