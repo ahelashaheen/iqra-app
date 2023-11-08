@@ -3,6 +3,7 @@ import 'package:islami_app/home/quran/sura_detailes_name.dart';
 import 'package:islami_app/my_theme.dart';
 import 'package:islami_app/providers/app_config_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home/ahadeth/ahadeth_details_screen.dart';
 import 'home/home-screen.dart';
@@ -12,11 +13,13 @@ void main() {
   runApp(ChangeNotifierProvider(
       create: (context) => AppConfigProvider(), child: MyApp()));
 }
-
 class MyApp extends StatelessWidget {
+  late AppConfigProvider provider;
+
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<AppConfigProvider>(context);
+    provider = Provider.of<AppConfigProvider>(context);
+    initSharedPrf();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
@@ -32,5 +35,19 @@ class MyApp extends StatelessWidget {
       darkTheme: MyTheme.darkMode,
       themeMode: provider.appTheme,
     );
+  }
+
+  Future<void> initSharedPrf() async {
+    final prefs = await SharedPreferences.getInstance();
+    var languge = prefs.getString('languge');
+    if (languge != null) {
+      provider.ChangeLanguage(languge);
+    }
+    var isDark = prefs.getBool('isDark');
+    if (isDark == true) {
+      provider.ChangeTheme(ThemeMode.dark);
+    } else if (isDark == false) {
+      provider.ChangeTheme(ThemeMode.light);
+    }
   }
 }

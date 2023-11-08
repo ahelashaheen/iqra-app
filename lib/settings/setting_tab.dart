@@ -4,6 +4,7 @@ import 'package:islami_app/settings/languge_bottom_sheet.dart';
 import 'package:islami_app/settings/theme_botton_sheet.dart';
 import 'package:provider/provider.dart';
 
+import '../my_theme.dart';
 import '../providers/app_config_provider.dart';
 
 class Settings extends StatefulWidget {
@@ -46,7 +47,12 @@ class _SettingsState extends State<Settings> {
                     ,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Icon(Icons.arrow_drop_down)
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: provider.isDarkMode()
+                        ? MyTheme.yellowcolor
+                        : Theme.of(context).shadowColor,
+                  )
                 ],
               ),
             ),
@@ -82,7 +88,12 @@ class _SettingsState extends State<Settings> {
                     ,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Icon(Icons.arrow_drop_down)
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: provider.isDarkMode()
+                        ? MyTheme.yellowcolor
+                        : Theme.of(context).shadowColor,
+                  )
                 ],
               ),
             ),
