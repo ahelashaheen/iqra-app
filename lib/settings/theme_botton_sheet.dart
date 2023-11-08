@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../my_theme.dart';
 import '../providers/app_config_provider.dart';
 
 class LanguageThemeSheet extends StatelessWidget {
@@ -36,6 +37,7 @@ class LanguageThemeSheet extends StatelessWidget {
   }
 
   Widget getSelectedItemWidget(BuildContext context, String text) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -43,10 +45,11 @@ class LanguageThemeSheet extends StatelessWidget {
         children: [
           Text(
             text,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: Theme.of(context).primaryColor),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: provider.isDarkMode()
+                      ? MyTheme.blackcolor
+                      : Theme.of(context).shadowColor,
+                ),
           ),
           Icon(
             Icons.check,
@@ -59,13 +62,20 @@ class LanguageThemeSheet extends StatelessWidget {
   }
 
   Widget getUnSelectedItemWidget(BuildContext context, String text) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: Theme.of(context).textTheme.titleMedium),
-          // Icon(Icons.check, color: Theme.of(context).primaryColor,size: 35,)
+          Text(
+            text,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: provider.isDarkMode()
+                    ? MyTheme.blackcolor
+                    : Theme.of(context).shadowColor),
+            // Icon(Icons.check, color: Theme.of(context).primaryColor,size: 35,)
+          )
         ],
       ),
     );
